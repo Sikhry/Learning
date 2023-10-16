@@ -148,57 +148,76 @@ namespace Tic_Tac
             int u = 0;
             string input;
             char player = 'o';
-
+            
+            
             RefDisplay();            
-
 
             while (true)
             {
-                Console.WriteLine("Please select the place(from 1 to 9) you want to tic");
-
-                input = Console.ReadLine();
-
-                if (Convert.ToInt32(input) > 9)
-                {                    
-                    continue;
-                }
-
-                player = switchuser(player);
-
-                foreach (var i in values)
+                while (true)
                 {
+                    Console.WriteLine("Please select the place(from 1 to 9) you want to tic");
 
-                    if (i != '-')
+                    input = Console.ReadLine();
+
+                    if (Convert.ToInt32(input) > 9)
                     {
-                        u++;
+                        continue;
+                    }
+
+                    player = switchuser(player);
+
+                    foreach (var i in values)
+                    {
+
+                        if (i != '-')
+                        {
+                            u++;
+                        }
+                    }
+                    if (u == 9)
+                    {
+                        Console.WriteLine("Tie");
+                        break;
+                    }
+
+                    if (values[Convert.ToInt32(input) - 1] != '-')
+                    {
+                        Console.WriteLine("it's already ticked please choose another one");
+                        continue;
+
+                    }
+
+                    values[Convert.ToInt32(input) - 1] = player;
+
+                    UpdateDisplay(values);
+
+                    if (winner(values) == true)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        continue;
                     }
                 }
-                if (u == 9)
+                Console.WriteLine("To restart Press 'Space'");
+                Console.WriteLine("To end Prss 'Enter'");
+                var end = Console.ReadLine();
+                if (end == " ")
                 {
-                    Console.WriteLine("Tie");
-                    break;
-                }
-
-                if (values[Convert.ToInt32(input) - 1] != '-')
-                {
-                    Console.WriteLine("it's already ticked please choose another one");
+                    for (int i = 0; i<9; i++)
+                    {
+                        values[i] = '-';
+                    }
                     continue;
-
-                }               
-
-                values[Convert.ToInt32(input) - 1] = player;
-
-                UpdateDisplay(values);
-
-                if (winner(values) == true)
-                {
-                    break;
                 }
                 else
                 {
-                    continue;
+                    break;
                 }
-            }
+                
+            }            
         }       
 
     }
